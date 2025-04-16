@@ -1,3 +1,5 @@
+# This is a simple POC for a smart news platform being researched and developed at UMD by Professor Ronald Yaros. All credits to him.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
