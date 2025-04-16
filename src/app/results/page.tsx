@@ -8,7 +8,8 @@ import ArticleHeader from '@/components/ArticleHeader';
 import StoryHighlights from '@/components/StoryHighlights';
 import SectionContent from '@/components/SectionContent';
 import RightSidebar from '@/components/RightSidebar';
-import UrlInput from '@/components/UrlInput';
+import CompactUrlInput from '@/components/CompactUrlInput';
+import ShareButton from '@/components/ShareButton';
 import { FiArrowLeft, FiRefreshCw } from 'react-icons/fi';
 
 export default function ResultsPage() {
@@ -77,27 +78,30 @@ export default function ResultsPage() {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-6">
+    <div className="min-h-screen p-4 md:p-6 animate-page-enter">
       <div className="max-w-7xl mx-auto mb-6">
-        <div className="mb-6">
+        <div className="mb-6 flex justify-between items-center animate-fade-in">
           <button
             onClick={() => router.push('/')}
             className="dark-btn px-3 py-2 rounded-md flex items-center"
           >
             <FiArrowLeft className="mr-2" /> Back to Home
           </button>
+          
+          {/* Add Share button */}
+          {articleData && <ShareButton articleData={articleData} />}
         </div>
         
         {/* URL Input for quick search */}
-        <div className="mb-6">
-          <UrlInput />
+        <div className="mb-6 animate-slide-in">
+          <CompactUrlInput />
         </div>
         
-        <div className="card p-6 mb-6">
+        <div className="card p-6 mb-6 animate-scale-in">
           <ArticleHeader metadata={metadata} />
         </div>
         
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex flex-col lg:flex-row gap-6 stagger-children">
           {/* Left Sidebar - Navigation */}
           <div className="w-full lg:w-64 flex-shrink-0 order-2 lg:order-1">
             <Sidebar 

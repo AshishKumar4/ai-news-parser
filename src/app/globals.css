@@ -18,16 +18,135 @@ body {
   min-height: 100vh;
 }
 
+/* Page transitions */
+@keyframes pageTransitionIn {
+  0% { 
+    opacity: 0;
+    transform: translateY(20px); 
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageTransitionOut {
+  0% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% { 
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideInFromRight {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Add animation classes with will-change for performance */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out forwards;
+  will-change: opacity;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-in-out forwards;
+  will-change: transform, opacity;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.3s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.animate-page-enter {
+  animation: pageTransitionIn 0.4s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.animate-page-exit {
+  animation: pageTransitionOut 0.3s ease-in forwards;
+  will-change: transform, opacity;
+}
+
+/* Add staggered animations for child elements with better performance */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
+  will-change: opacity;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* Add hover and active transitions */
+.transition-all {
+  transition: all 0.2s ease;
+  will-change: transform, box-shadow, background-color;
+}
+
+.transition-transform {
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+.transition-colors {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  will-change: background-color, border-color, color;
+}
+
+/* Fix for mobile animations */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Card styles with improved transitions */
 .card {
   background-color: var(--card);
   border-radius: 0.75rem;
   border: 1px solid var(--border);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform, box-shadow;
 }
 
 .card:hover {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
 }
 
 .content-card {
@@ -38,6 +157,7 @@ body {
   margin-bottom: 1.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
 }
 
 .content-card:hover {
@@ -47,7 +167,8 @@ body {
 
 .sidebar-section {
   border-radius: 0.5rem;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform, background-color;
 }
 
 .sidebar-section:hover {
@@ -57,28 +178,33 @@ body {
 .sidebar-section.active {
   background-color: rgba(16, 185, 129, 0.2);
   border-left: 3px solid var(--primary);
+  transform: translateX(3px);
 }
 
 .dark-btn {
   background-color: var(--card);
   color: var(--foreground);
   border: 1px solid var(--border);
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform, background-color;
 }
 
 .dark-btn:hover {
   background-color: var(--card-highlight);
+  transform: translateY(-1px);
 }
 
 .primary-btn {
   background-color: var(--primary);
   color: white;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform, background-color, box-shadow;
 }
 
 .primary-btn:hover {
   background-color: var(--primary-dark);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Added classes for image gallery */
@@ -94,7 +220,8 @@ body {
   object-fit: cover;
   border-radius: 0.25rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform;
 }
 
 .gallery-image:hover {
@@ -118,25 +245,6 @@ body {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes slideIn {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.animate-slide-in {
-  animation: slideIn 0.3s ease-in-out;
-}
-
 /* Typography enhancements */
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.025em;
@@ -147,4 +255,22 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-image: linear-gradient(to right, var(--primary), #4ade80);
+}
+
+/* Share button dropdown style */
+.share-dropdown {
+  position: absolute;
+  z-index: 50;
+  transform-origin: top right;
+  animation: scaleIn 0.15s ease-out forwards;
+}
+
+/* Click-away listener overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
 }

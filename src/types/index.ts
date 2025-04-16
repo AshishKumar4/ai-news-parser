@@ -1,6 +1,7 @@
 export interface Section {
   id: string;
   title: string;
+  subtitle?: string;
   content: string;
   summary?: string;
   highlights?: StoryHighlight[];
@@ -21,6 +22,7 @@ export interface ArticleMetadata {
   author: string;
   date: string;
   url: string;
+  description?: string;
   featuredImage?: ArticleImage;
   images: ArticleImage[];
 }

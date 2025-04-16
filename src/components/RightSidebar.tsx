@@ -60,26 +60,34 @@ export default function RightSidebar({ metadata, view, onViewChange }: RightSide
       
       {/* Featured Image */}
       {metadata.featuredImage && (
-        <div>
+        <div className="animate-fade-in">
           <h3 className="text-lg font-bold mb-3 text-green-400">FEATURED IMAGE</h3>
-          <div className="relative border border-gray-700 rounded-md overflow-hidden bg-gray-800">
-            <img 
-              src={metadata.featuredImage.url} 
-              alt={metadata.featuredImage.alt || metadata.title} 
-              className="featured-image w-full object-cover"
-              onError={(e) => {
-                // Replace with placeholder on error
-                e.currentTarget.onerror = null;
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentNode;
-                const placeholder = document.createElement('div');
-                placeholder.className = 'w-full aspect-video flex items-center justify-center bg-gray-800 p-4 text-center text-gray-500';
-                placeholder.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><p class="mt-2">Image could not be loaded</p>';
-                parent?.appendChild(placeholder);
-              }}
-            />
+          <div className="relative border border-gray-700 rounded-md overflow-hidden bg-gray-800/50">
+            <div className="w-full aspect-video relative">
+              <img 
+                src={metadata.featuredImage.url} 
+                alt={metadata.featuredImage.alt || metadata.title} 
+                className="w-full h-full object-cover transition-opacity duration-300"
+                onLoad={(e) => {
+                  // Ensure image is visible with a fade-in effect
+                  e.currentTarget.style.opacity = "1";
+                }}
+                onError={(e) => {
+                  // Replace with placeholder on error
+                  const parent = e.currentTarget.parentElement;
+                  if (parent) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'absolute inset-0 flex flex-col items-center justify-center bg-gray-800 text-gray-500';
+                    placeholder.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><p class="mt-2">Image could not be loaded</p>';
+                    parent.appendChild(placeholder);
+                    e.currentTarget.style.display = 'none';
+                  }
+                }}
+                style={{ opacity: 0 }} // Start with opacity 0 for fade effect
+              />
+            </div>
             {metadata.featuredImage.alt && (
-              <div className="p-2 text-sm text-gray-300 bg-black bg-opacity-50">
+              <div className="p-2 text-sm text-gray-300 bg-gradient-to-t from-gray-900/90 to-transparent">
                 {metadata.featuredImage.alt}
               </div>
             )}

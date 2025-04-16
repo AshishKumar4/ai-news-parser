@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   env: {
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     GEMINI_API_KEY: process.env.GEMINI_API_KEY,
-    API_PROVIDER: process.env.API_PROVIDER || 'openai',
+    API_PROVIDER: process.env.API_PROVIDER || 'gemini',
   },
   // Add images configuration to allow external image sources
   images: {

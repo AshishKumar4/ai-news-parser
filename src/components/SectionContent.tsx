@@ -13,8 +13,8 @@ export default function SectionContent({ section, summary, view }: SectionConten
   // If we're in summary view, display a condensed version with just one card
   if (view === 'summary') {
     return (
-      <div className="space-y-4 animate-fade-in">
-        <div className="content-card">
+      <div className="space-y-4 animate-fade-in transition-all">
+        <div className="content-card animate-scale-in">
           <h2 className="text-xl font-bold mb-4 flex items-center">
             <FiBookOpen className="mr-2 text-green-500" /> {section.title}
           </h2>
@@ -28,14 +28,14 @@ export default function SectionContent({ section, summary, view }: SectionConten
 
   // Detailed view shows full content, section highlights and summary as separate cards
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-4 animate-fade-in transition-all">
       {/* Section Highlights Card */}
       {section.highlights && section.highlights.length > 0 && (
-        <div className="content-card">
+        <div className="content-card animate-scale-in" style={{ animationDelay: '0.1s' }}>
           <h2 className="text-xl font-bold mb-4 flex items-center">
             <FiStar className="mr-2 text-green-500" /> {section.title} Highlights
           </h2>
-          <ul className="list-none space-y-3">
+          <ul className="list-none space-y-3 stagger-children">
             {section.highlights.map((highlight, index) => (
               <li key={index} className="flex items-baseline">
                 <span className="text-green-500 font-bold mr-2">•</span>
@@ -47,7 +47,7 @@ export default function SectionContent({ section, summary, view }: SectionConten
       )}
 
       {/* Section Content Card */}
-      <div className="content-card">
+      <div className="content-card animate-scale-in" style={{ animationDelay: '0.2s' }}>
         <h2 className="text-xl font-bold mb-4 flex items-center">
           <FiBookOpen className="mr-2 text-green-500" /> {section.title}
         </h2>
@@ -57,7 +57,7 @@ export default function SectionContent({ section, summary, view }: SectionConten
       </div>
 
       {/* Section Summary Card */}
-      <div className="content-card">
+      <div className="content-card animate-scale-in" style={{ animationDelay: '0.3s' }}>
         <h2 className="text-xl font-bold mb-4 flex items-center">
           <FiFileText className="mr-2 text-green-500" /> Summary
         </h2>

@@ -13,8 +13,8 @@ export default function StoryHighlights({ highlights, summary, view = 'detailed'
   // For summary view, show a more compact version with just one card
   if (view === 'summary') {
     return (
-      <div className="space-y-4 animate-fade-in">
-        <div className="content-card">
+      <div className="space-y-4 animate-fade-in transition-all">
+        <div className="content-card animate-scale-in">
           <h2 className="text-xl font-bold mb-4 flex items-center">
             <FiFileText className="mr-2 text-green-500" /> Article Summary
           </h2>
@@ -28,13 +28,13 @@ export default function StoryHighlights({ highlights, summary, view = 'detailed'
 
   // For detailed view, show highlights and summary as separate cards
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-4 animate-fade-in transition-all">
       {/* Highlights Card */}
-      <div className="content-card">
+      <div className="content-card animate-scale-in" style={{ animationDelay: '0.1s' }}>
         <h2 className="text-xl font-bold mb-4 flex items-center">
           <FiStar className="mr-2 text-green-500" /> Story Highlights
         </h2>
-        <ul className="list-none space-y-3">
+        <ul className="list-none space-y-3 stagger-children">
           {highlights.map((highlight, index) => (
             <li key={index} className="flex items-baseline">
               <span className="text-green-500 font-bold mr-2">•</span>
@@ -45,7 +45,7 @@ export default function StoryHighlights({ highlights, summary, view = 'detailed'
       </div>
 
       {/* Summary Card */}
-      <div className="content-card">
+      <div className="content-card animate-scale-in" style={{ animationDelay: '0.2s' }}>
         <h2 className="text-xl font-bold mb-4 flex items-center">
           <FiFileText className="mr-2 text-green-500" /> Summary
         </h2>

@@ -1,8 +1,6 @@
 'use client';
 
-import { useState } from 'react';
 import { Section } from '@/types';
-import { FiMenu, FiLayers } from 'react-icons/fi';
 
 interface SidebarProps {
   sections: Section[];
@@ -11,48 +9,35 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ sections, activeSection, onSectionChange }: SidebarProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <div className="relative">
-      <button 
-        onClick={() => setIsOpen(!isOpen)} 
-        className="lg:hidden dark-btn p-2 rounded-md mb-2 w-full flex items-center justify-between"
-      >
-        <span className="flex items-center">
-          <FiLayers className="mr-2" /> Sections
-        </span>
-        <FiMenu size={20} />
-      </button>
+    <div className="sticky top-6 card p-0 animate-slide-in">
+      <div className="p-4 border-b border-gray-700">
+        <h2 className="font-bold text-lg text-green-400">SECTIONS</h2>
+      </div>
       
-      <div className={`card overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-96' : 'max-h-0 lg:max-h-none'} lg:block`}>
-        <div className="p-4">
-          <h3 className="text-lg font-bold mb-4 tracking-wide">EXPLORE SECTIONS</h3>
-          <nav className="space-y-2">
-            <div 
-              className={`sidebar-section py-3 px-4 cursor-pointer ${activeSection === 'highlights' ? 'active' : ''}`}
-              onClick={() => {
-                onSectionChange('highlights');
-                setIsOpen(false);
-              }}
-            >
-              Story Highlights
-            </div>
-            
-            {sections.map((section) => (
-              <div
-                key={section.id}
-                className={`sidebar-section py-3 px-4 cursor-pointer ${activeSection === section.id ? 'active' : ''}`}
-                onClick={() => {
-                  onSectionChange(section.id);
-                  setIsOpen(false);
-                }}
-              >
-                {section.title}
-              </div>
-            ))}
-          </nav>
+      <div className="py-2 stagger-children">
+        {/* Highlights Section */}
+        <div 
+          className={`sidebar-section p-4 cursor-pointer mb-1 ${activeSection === 'highlights' ? 'active' : ''}`}
+          onClick={() => onSectionChange('highlights')}
+        >
+          <div className="font-medium">Story Highlights</div>
+          <div className="text-sm text-gray-400">Key points & summary</div>
         </div>
+        
+        {/* Article Sections */}
+        {sections.map(section => (
+          <div 
+            key={section.id}
+            className={`sidebar-section p-4 cursor-pointer mb-1 ${activeSection === section.id ? 'active' : ''}`}
+            onClick={() => onSectionChange(section.id)}
+          >
+            <div className="font-medium">{section.title}</div>
+            {section.subtitle && (
+              <div className="text-sm text-gray-400">{section.subtitle}</div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
